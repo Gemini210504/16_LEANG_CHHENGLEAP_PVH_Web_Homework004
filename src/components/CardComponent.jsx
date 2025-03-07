@@ -57,10 +57,12 @@ export default function CardComponent({ project }) {
   
   return (
     <div>
-      <div className="max-w-sm p-6 bg-white rounded-2xl shadow-sm dark:bg-gray-800 dark:border-gray-700">
-        <div className="flex justify-between mb-5">
+      <div className="max-w-sm p-6 bg-white rounded-2xl shadow-sm dark:bg-gray-800 dark:border-gray-700 ">
+        <div className="flex justify-between mb-5 ">
           {/* Date */}
-          <p className={`${dueDateColor(progress)} font-medium`}>{formattedDate(dueDate)}</p>
+          <p className={`${dueDateColor(progress)} font-medium`}>
+            {formattedDate(dueDate)}
+          </p>
           <EllipsisVertical size={20} color="#374957" />
         </div>
 

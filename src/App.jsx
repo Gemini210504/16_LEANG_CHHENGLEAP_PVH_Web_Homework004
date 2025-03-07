@@ -46,7 +46,7 @@ function App() {
             <AssignmentsComponent className="flex-1" />
             <AddNewProjectComponent handleAddNewProject={handleAddNewProject} />
           </div>
-          <div className="grid grid-cols-3 gap-5">
+          <div className="grid grid-cols-3 gap-5 overflow-auto h-[55vh]">
             {searchedProject.map((project, index) => (
               <CardComponent key={index} project={project} />
             ))}
