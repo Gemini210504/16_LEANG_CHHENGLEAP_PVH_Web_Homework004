@@ -14,6 +14,7 @@ export default function LearningMaterialsComponent() {
           ? prev.filter((item) => item !== id) 
           : [...prev, id] 
     );
+    
   };
 
   const formattedDate = (date) => {

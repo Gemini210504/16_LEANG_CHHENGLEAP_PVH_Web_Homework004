@@ -48,10 +48,17 @@ export default function AddNewProjectComponent({handleAddNewProject}) {
     setErrorInput({});
   };
 
-  const descriptionType = (description) => {
-    return description ? description : "Lorem ipsum dolor sit amet...";
-  };
+ const descriptionType = (description) => {
+   if (description) return description;
 
+   let lorem =
+     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur auctor ligula id quam tempor, et tristique metus mattis.";
+   let maxLength = 120;
+
+   return lorem.length > maxLength
+     ? lorem.substring(0, maxLength) + "..."
+     : lorem;
+ };
   return (
     <div>
       <button
