@@ -8,28 +8,50 @@ export default function AddNewProjectComponent({handleAddNewProject}) {
   const [dueDate, setDueDate] = useState("");
   const [progress, setProgress] = useState("");
   const [description, setDescription] = useState("");
+  const [errorInput, setErrorInput] = useState({});
+
+  const validateInputs = () => {
+    let errors = {};
+    const currentDate = new Date().toISOString().split("T")[0]; 
+
+    if (!projectName) errors.projectName = "* Project name is required";
+    if (!dueDate) {
+      errors.dueDate = "* Please choose your deadline for the project";
+    } else if (dueDate < currentDate) {
+      errors.dueDate = "* Selected date cannot be earlier than today";
+    }
+    if (!progress) errors.progress = "* Please choose progress of your project";
+
+    return errors;
+  };
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    // const checkDueDate = (dueDate) => {
-    //   return dueDate > 0 ? dueDate : 0;
-    // };
+    const errors = validateInputs();
+    if (Object.keys(errors).length > 0) {
+      setErrorInput(errors);
+      return;
+    }
 
     handleAddNewProject({
       projectName,
-      dueDate, 
+      dueDate,
       progress: Number(progress),
       description: descriptionType(description),
     });
+
     setProjectName("");
     setDueDate("");
     setProgress("");
     setDescription("");
+    setErrorInput({});
   };
+
   const descriptionType = (description) => {
     return description ? description : "Lorem ipsum dolor sit amet...";
   };
+
   return (
     <div>
       <button
@@ -86,6 +108,7 @@ export default function AddNewProjectComponent({handleAddNewProject}) {
                     Project Name
                   </label>
                   <input
+                    
                     value={projectName}
                     onChange={(e) => setProjectName(e.target.value)}
                     type="text"
@@ -94,6 +117,11 @@ export default function AddNewProjectComponent({handleAddNewProject}) {
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     placeholder="Type Project Name"
                   />
+                  {errorInput.projectName && (
+                    <p className="text-red-500 text-xs">
+                      {errorInput.projectName}
+                    </p>
+                  )}
                 </div>
 
                 <div className="col-span-2">
@@ -104,6 +132,7 @@ export default function AddNewProjectComponent({handleAddNewProject}) {
                     Due Date
                   </label>
                   <input
+                   
                     value={dueDate}
                     onChange={(e) => setDueDate(e.target.value)}
                     type="date"
@@ -111,6 +140,9 @@ export default function AddNewProjectComponent({handleAddNewProject}) {
                     id="dueDate"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                   />
+                  {errorInput.dueDate && (
+                    <p className="text-red-500 text-xs">{errorInput.dueDate}</p>
+                  )}
                 </div>
 
                 <div className="col-span-2">
@@ -121,6 +153,7 @@ export default function AddNewProjectComponent({handleAddNewProject}) {
                     Progress
                   </label>
                   <select
+                    
                     value={progress}
                     onChange={(e) => setProgress(e.target.value)}
                     id="progress"
@@ -132,6 +165,9 @@ export default function AddNewProjectComponent({handleAddNewProject}) {
                     <option value="50">50</option>
                     <option value="25">25</option>
                   </select>
+                  {errorInput.progress && (
+                    <p className="text-red-500 text-xs">{errorInput.progress}</p>
+                  )}
                 </div>
                 <div className="col-span-2">
                   <label

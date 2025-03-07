@@ -17,7 +17,7 @@ export default function CardComponent({ project }) {
     );
 
     if (differenceInDays < 0) {
-      return null;
+      return "Deadline";
     }
 
     if (differenceInDays >= 7) {
@@ -44,12 +44,23 @@ export default function CardComponent({ project }) {
     return "text-gray-300";
   };
 
+  const formattedDate = (date) => {
+    const options = {
+      
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    };
+    const newDate = new Date(date).toLocaleDateString("en-US", options);
+    return newDate;
+  };
+  
   return (
     <div>
       <div className="max-w-sm p-6 bg-white rounded-2xl shadow-sm dark:bg-gray-800 dark:border-gray-700">
         <div className="flex justify-between mb-5">
           {/* Date */}
-          <p className={`${dueDateColor(progress)} font-medium`}>{dueDate}</p>
+          <p className={`${dueDateColor(progress)} font-medium`}>{formattedDate(dueDate)}</p>
           <EllipsisVertical size={20} color="#374957" />
         </div>
 

@@ -15,7 +15,18 @@ export default function LearningMaterialsComponent() {
           : [...prev, id] 
     );
   };
-  
+
+  const formattedDate = (date) => {
+    const options = {
+      weekday: "short",
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    };
+    const newDate = new Date(date).toLocaleDateString("en-US", options);
+    return newDate;
+  };
+
   const handleSortDataChange = (sortOption) => {
     let sorted = [...learningMaterials]; 
     sorted =
@@ -26,11 +37,13 @@ export default function LearningMaterialsComponent() {
     setSortItem(sorted); 
   };
 
+  
+
 
   return (
     <div className="bg-white drop-shadow-lg rounded-2xl overflow-auto h-[80vh]">
       {/* calling filter component */}
-      <FilterComponent  onSortChange={handleSortDataChange}/>
+      <FilterComponent onSortChange={handleSortDataChange} />
 
       {/* title */}
       <div className="p-4 flex justify-between items-center">
@@ -66,11 +79,11 @@ export default function LearningMaterialsComponent() {
                   stroke={`${
                     starredItems.includes(material.id) ? "#FAA300" : "#2B343B"
                   }`}
-                  onClick={() => toggleStar(material.id)} // Toggle favorite
+                  onClick={() => toggleStar(material.id)}
                 />
               </div>
               <p className="text-gray-400 text-sm">
-                Posted at: {material.postedAt}
+                Posted at: {formattedDate(material.postedAt)}
               </p>
             </div>
           </div>

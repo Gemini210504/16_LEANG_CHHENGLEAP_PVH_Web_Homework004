@@ -9,7 +9,7 @@ export default function DashboardComponent() {
       {/* display summary on each card */}
       <div className="flex gap-3">
         {dashboard.map((board) => (
-          <div className="flex flex-1 bg-white py-3.5 p-4 rounded-xl w-[260px]">
+          <div className="flex flex-1 bg-white py-3.5 p-4 rounded-xl w-auto">
             <div className={`p-3 rounded-xl ${board.color}`}>
               <img src={board.icon} alt={board.label} />
             </div>

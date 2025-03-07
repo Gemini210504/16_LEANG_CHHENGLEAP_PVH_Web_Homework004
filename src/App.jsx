@@ -42,7 +42,7 @@ function App() {
       <div className="col-span-8 flex gap-4 p-4">
         <main className="w-3/4 flex flex-col gap-4 p-4 ">
           <DashboardComponent />
-          <div className="flex  justify-between gap-4">
+          <div className="flex justify-between gap-4">
             <AssignmentsComponent className="flex-1" />
             <AddNewProjectComponent handleAddNewProject={handleAddNewProject} />
           </div>
