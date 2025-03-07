@@ -7,18 +7,17 @@ export default function DashboardComponent() {
       <h2 className="text-xl font-semibold mb-5">Dashboard</h2>
 
       {/* display summary on each card */}
-      <div className="flex gap-5">
-        {dashboard?.map((d) => (
-          <div
-            key={d?.id}
-            className="flex bg-white gap-5 py-3.5 px-4 rounded-xl w-full"
-          >
-            <div className={`${d?.color} p-3 rounded-xl`}>
-              <img src={d.icon} alt="file icon" />
+      <div className="flex gap-3">
+        {dashboard.map((board) => (
+          <div className="flex flex-1 bg-white py-3.5 p-4 rounded-xl w-[260px]">
+            <div className={`p-3 rounded-xl ${board.color}`}>
+              <img src={board.icon} alt={board.label} />
             </div>
             <div>
-              <p className="text-xl font-semibold">{d?.totalTasks}</p>
-              <p className="text-gray-400">{d?.label}</p>
+              <p className="font-semibold text-[22px] ml-2">
+                {board.totalTasks}
+              </p>
+              <p className="text-gray-400 text-[14px] ml-2 ">{board.label}</p>
             </div>
           </div>
         ))}

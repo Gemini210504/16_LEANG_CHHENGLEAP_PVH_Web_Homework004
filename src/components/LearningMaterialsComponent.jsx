@@ -1,25 +1,36 @@
 import React from "react";
-import { learningMaterials } from "../data/learningMaterials";
 import { Star } from "lucide-react";
 import FilterComponent from "./FilterComponent";
+import { learningMaterials } from "../data/learningMaterials";
+import { useState } from "react";
 
 export default function LearningMaterialsComponent() {
-  // format date
-  const formattedDate = (date) => {
-    const options = {
-      weekday: "short",
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    };
-    const newDate = new Date(date).toLocaleDateString("en-US", options);
-    return newDate;
+  const [starredItems, setStarredItems] = useState([]);
+  const [sortItem, setSortItem] = useState(learningMaterials);
+  const toggleStar = (id) => {
+    setStarredItems(
+      (prev) =>
+        prev.includes(id)
+          ? prev.filter((item) => item !== id) 
+          : [...prev, id] 
+    );
+  };
+  
+  const handleSortDataChange = (sortOption) => {
+    let sorted = [...learningMaterials]; 
+    sorted =
+      sortOption === "A-Z"
+        ? sorted.sort((a, b) => a.title.localeCompare(b.title)) 
+        : sorted.sort((a, b) => b.title.localeCompare(a.title)); 
+
+    setSortItem(sorted); 
   };
 
+
   return (
-    <div className="bg-white drop-shadow-lg rounded-2xl overflow-auto max-h-5/6 no-scrollbar">
+    <div className="bg-white drop-shadow-lg rounded-2xl overflow-auto h-[80vh]">
       {/* calling filter component */}
-      <FilterComponent />
+      <FilterComponent  onSortChange={handleSortDataChange}/>
 
       {/* title */}
       <div className="p-4 flex justify-between items-center">
@@ -28,15 +39,16 @@ export default function LearningMaterialsComponent() {
       </div>
 
       {/* materials list */}
-      <div className="space-y-3">
-        {learningMaterials?.map((material) => (
+
+      <div className="space-y-3 p-4">
+        {sortItem.map((material, index) => (
           <div
-            key={material?.id}
+            key={index}
             className="bg-light-gray px-4 py-2 flex gap-5 items-center"
           >
             <img
-              src={material?.image}
-              alt={material?.title}
+              src={material.image}
+              alt={material.title}
               width={50}
               height={50}
               className="rounded-xl"
@@ -44,15 +56,21 @@ export default function LearningMaterialsComponent() {
 
             <div className="w-full">
               <div className="flex justify-between">
-                <p className="text-base font-medium">{material?.title}</p>
+                <p className="text-base font-medium">{material.title}</p>
                 <Star
                   size={20}
-                  fill={`${material?.isFavorite ? "#FAA300" : "none"}`}
-                  stroke={`${material?.isFavorite ? "#FAA300" : "#2B343B"}`}
+                  className="cursor-pointer"
+                  fill={`${
+                    starredItems.includes(material.id) ? "#FAA300" : "none"
+                  }`}
+                  stroke={`${
+                    starredItems.includes(material.id) ? "#FAA300" : "#2B343B"
+                  }`}
+                  onClick={() => toggleStar(material.id)} // Toggle favorite
                 />
               </div>
               <p className="text-gray-400 text-sm">
-                Posted at: {formattedDate(material?.postedAt)}
+                Posted at: {material.postedAt}
               </p>
             </div>
           </div>
@@ -61,3 +79,4 @@ export default function LearningMaterialsComponent() {
     </div>
   );
 }
+

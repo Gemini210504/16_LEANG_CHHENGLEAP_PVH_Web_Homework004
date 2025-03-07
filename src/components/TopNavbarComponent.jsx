@@ -1,17 +1,21 @@
 import { Bell, Search } from "lucide-react";
 import React from "react";
+import { useState } from "react";
 
-export default function TopNavbarComponent() {
-  // handle on form submit
-  const handleSubmit = (e) => {
-    // to prevent the page from reload
-    e.preventDefault();
-  };
+export default function TopNavbarComponent({handlerSearchProject}) {
+    const [input, setInput] = useState("");
+    const handleInputSearch = (event) => {
+      setInput(event.target.value); // 
+      handlerSearchProject(event.target.value);
+    };
+
+    const handleSubmit = (e) => {
+      e.preventDefault(); 
+    };
 
   return (
     <div className="flex justify-between items-center">
-      {/* search bar */}
-      <form className="relative w-9/12 " onSubmit={handleSubmit}>
+      <form className="relative w-[70%] " onSubmit={handleSubmit} >
         {/* search button */}
         <button className="cursor-pointer">
           <Search className="w-6 h-6 text-primary-text absolute top-3 left-4" />
@@ -19,6 +23,8 @@ export default function TopNavbarComponent() {
 
         {/* search input */}
         <input
+          value={input}
+          onChange={handleInputSearch}
           type="text"
           placeholder="Search assignment here"
           className="w-full bg-white py-3 pl-14 pr-5 rounded-xl h-12 border-none focus:border-none focus:ring-0 focus:outline-custom-sky-blue"
@@ -33,7 +39,7 @@ export default function TopNavbarComponent() {
       </div>
 
       {/* profile image */}
-      <div className="h-16 rounded-xl w-2/12 bg-white py-2.5 px-3 flex gap-3 items-start">
+      <div className="h-16 rounded-xl w-[20%] bg-white py-2.5 px-3 flex gap-3 items-start">
         <img
           src="https://i.pinimg.com/736x/39/2a/50/392a5042102c7d7e4ed87527a2d7e74a.jpg"
           alt="profile image"
